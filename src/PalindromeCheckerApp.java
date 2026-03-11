@@ -1,6 +1,7 @@
 import java.util.Scanner;
+import java.util.Stack;
 
-public class UseCase4PalindromeCheckerApp {
+public class UseCase5PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -9,22 +10,21 @@ public class UseCase4PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Convert string to character array
-        char[] chars = input.toCharArray();
+        Stack<Character> stack = new Stack<>();
 
-        int start = 0;
-        int end = chars.length - 1;
+        // Push characters into stack
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
+        }
 
         boolean isPalindrome = true;
 
-        // Two-pointer comparison
-        while (start < end) {
-            if (chars[start] != chars[end]) {
+        // Pop and compare characters
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
 
         // Display result
