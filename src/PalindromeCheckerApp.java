@@ -1,39 +1,48 @@
-import java.util.Scanner;
+public class PalindromeCheckerApp {
+    public static boolean isPalindromeReverse(String str) {
+        String reversed = new StringBuilder(str).reverse().toString();
+        return str.equalsIgnoreCase(reversed);
+    }
 
-public class UseCase4PalindromeCheckerApp {
+    public static boolean isPalindromeTwoPointer(String str) {
+        int left = 0, right = str.length() - 1;
+        while (left < right) {
+            if (Character.toLowerCase(str.charAt(left)) != Character.toLowerCase(str.charAt(right))) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    public static boolean isPalindromeRecursive(String str, int left, int right) {
+        if (left >= right) return true;
+        if (Character.toLowerCase(str.charAt(left)) != Character.toLowerCase(str.charAt(right))) return false;
+        return isPalindromeRecursive(str, left + 1, right - 1);
+    }
 
     public static void main(String[] args) {
+        String testString = "madam";
 
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Palindrome Performance Comparison for: " + testString);
 
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
+        // Reverse method
+        long start = System.nanoTime();
+        boolean result1 = isPalindromeReverse(testString);
+        long end = System.nanoTime();
+        System.out.println("Reverse Method: " + result1 + " | Time: " + (end - start) + " ns");
 
-        // Convert string to character array
-        char[] chars = input.toCharArray();
+        // Two-pointer method
+        start = System.nanoTime();
+        boolean result2 = isPalindromeTwoPointer(testString);
+        end = System.nanoTime();
+        System.out.println("Two-Pointer Method: " + result2 + " | Time: " + (end - start) + " ns");
 
-        int start = 0;
-        int end = chars.length - 1;
-
-        boolean isPalindrome = true;
-
-        // Two-pointer comparison
-        while (start < end) {
-            if (chars[start] != chars[end]) {
-                isPalindrome = false;
-                break;
-            }
-            start++;
-            end--;
-        }
-
-        // Display result
-        if (isPalindrome) {
-            System.out.println("The string is a Palindrome.");
-        } else {
-            System.out.println("The string is NOT a Palindrome.");
-        }
-
-        sc.close();
+        // Recursive method
+        start = System.nanoTime();
+        boolean result3 = isPalindromeRecursive(testString, 0, testString.length() - 1);
+        end = System.nanoTime();
+        System.out.println("Recursive Method: " + result3 + " | Time: " + (end - start) + " ns");
     }
 }
